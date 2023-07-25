@@ -49,6 +49,7 @@ def img_layers(folder_name, img, anns):
 
         # Output the image layers in the folder
         os.makedirs(folder_name, exist_ok=True)
+
         filename = os.path.join(folder_name, 'layer'+str(cnt)+'.png')
         cv2.imwrite(filename, layer)
 
