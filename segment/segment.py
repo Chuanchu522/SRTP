@@ -27,10 +27,15 @@ def show_anns(anns):
     ax.imshow(img)
 
 def img_layers(folder_name, img, anns):
+    # Ensure the form of the image uses color space RGBA
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGBA)
+    img[:, :, [0, 1, 2, 3]] = img[:, :, [2, 1, 0, 3]]
+
     if len(anns) == 0:
         return [img]
 
-    # Sort the masks according to there area in descending order
+    # Sort the masks according to the area in descending order
     sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)
 
     layers = []
@@ -102,10 +107,5 @@ plt.show()
 Save the result layers in the folder as '.png' form and in the list image_layers
 """
 folder = 'layers'
-
-# Ensure the form of the image uses color space RGBA
-image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGBA)
-image[:, :, [0, 1, 2, 3]] = image[:, :, [2, 1, 0, 3]]
 
 image_layers = img_layers(folder, image, masks)
